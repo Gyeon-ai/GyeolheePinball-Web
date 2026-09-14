@@ -2,6 +2,9 @@
 
 결희 퍼스나콘 공을 물리 엔진으로 굴려 오늘의 종합게임이나 당첨자를 뽑는 방송용 웹 핀볼이다. 원본 [Marble Roulette](https://github.com/lazygyu/roulette)를 기반으로 하며 서버나 데이터베이스 없이 정적 파일만으로 동작한다.
 
+- 웹사이트: https://gyeon-ai.github.io/GyeolheePinball-Web/
+- GitHub: https://github.com/Gyeon-ai/GyeolheePinball-Web
+
 ## 주요 기능
 
 - 쉼표 또는 줄바꿈으로 최대 200개 후보 입력
