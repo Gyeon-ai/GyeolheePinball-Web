@@ -10,9 +10,8 @@ import options from './options';
 import { ParticleManager } from './particleManager';
 import { Box2dPhysics } from './physics-box2d';
 import { RankRenderer } from './rankRenderer';
-import { type AdHit, RouletteRenderer } from './rouletteRenderer';
+import { RouletteRenderer } from './rouletteRenderer';
 import { SkillEffect } from './skillEffect';
-import type { RoundAd } from './types/Ad.type';
 import type { ColorTheme } from './types/ColorTheme';
 import type { MouseEventHandlerName, MouseEventName } from './types/mouseEvents.type';
 import type { UIObject } from './UIObject';
@@ -87,7 +86,6 @@ export class Roulette extends EventTarget {
     }
     if (obj.onMessage) {
       obj.onMessage((msg) => {
-        console.log('onMessage', msg);
         this.dispatchEvent(new CustomEvent('message', { detail: msg }));
       });
     }
@@ -166,7 +164,8 @@ export class Roulette extends EventTarget {
     this._goalDist = Math.abs(this._stage.zoomY - topY);
     this._timeScale = this._calcTimeScale();
 
-    this._marbles = this._marbles.filter((marble) => marble.y <= this._stage?.goalY);
+    const goalY = this._stage.goalY;
+    this._marbles = this._marbles.filter((marble) => marble.y <= goalY);
   }
 
   private _finishRound(winner: Marble) {
@@ -283,19 +282,6 @@ export class Roulette extends EventTarget {
       e.preventDefault();
     });
 
-    canvas.addEventListener('click', (e) => {
-      const hit = this.adHitAt(e);
-      if (!hit) return;
-      if (hit.type === 'close') {
-        this.hideAdOverlay();
-      } else {
-        window.open(hit.url, '_blank', 'noopener');
-      }
-    });
-
-    canvas.addEventListener('pointermove', (e) => {
-      canvas.style.cursor = this.adHitAt(e) ? 'pointer' : '';
-    });
   }
 
   private _loadMap() {
@@ -331,27 +317,6 @@ export class Roulette extends EventTarget {
       throw new Error('Speed multiplier must larger than 0');
     }
     this._speed = value;
-  }
-
-  public setAd(ad: RoundAd | null) {
-    this._renderer.setAd(ad);
-  }
-
-  public preloadAdImages(srcs: (string | undefined)[]) {
-    this._renderer.preloadAdImages(srcs);
-  }
-
-  public showAdOverlay(mode: 'preroll' | 'result') {
-    this._renderer.showAdOverlay(mode);
-  }
-
-  public hideAdOverlay() {
-    this._renderer.hideAdOverlay();
-  }
-
-  private adHitAt(e: MouseEvent): AdHit | null {
-    const sizeFactor = this._renderer.sizeFactor;
-    return this._renderer.getAdHitAt(e.offsetX * sizeFactor, e.offsetY * sizeFactor);
   }
 
   public setTheme(themeName: keyof typeof Themes) {

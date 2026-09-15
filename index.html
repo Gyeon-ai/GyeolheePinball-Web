@@ -209,11 +209,9 @@
 
   function initialize() {
     if (!window.roulette || !window.roulette.isReady) {
-      console.log('does not loaded yet');
       setTimeout(initialize, 100);
       return;
     }
-    console.log('initializing start');
 
     const urlParams = new URLSearchParams(window.location.search);
     const namesFromUrl = urlParams.get('names');
@@ -339,25 +337,12 @@
       window.roulette.setMap(index);
     });
 
-    // const checkDonateButtonLoaded = () => {
-    //   const btn = document.querySelector('span.bmc-btn-text');
-    //   if (!btn) {
-    //     setTimeout(checkDonateButtonLoaded, 100);
-    //   } else {
-    //     console.log('donation button has been loaded');
-    //     btn.setAttribute('data-trans', '');
-    //     window.translateElement(btn);
-    //   }
-    // };
-    // setTimeout(checkDonateButtonLoaded, 100);
-
     function simpleToast(msg) {
       const toast = document.createElement('div');
       toast.classList.add('toast');
       toast.innerHTML = msg;
 
       if (window.translateElement) {
-        console.log('try to translate');
         window.translateElement(toast);
       }
 

@@ -8,26 +8,7 @@ const { count, size, warnings } = await generateSW({
   ],
   skipWaiting: true,
   clientsClaim: true,
-  runtimeCaching: [
-    {
-      urlPattern: /\.(?:png|jpg|svg)$/,
-      handler: 'CacheFirst',
-      options: {
-        cacheName: 'images',
-        expiration: {
-          maxEntries: 60,
-          maxAgeSeconds: 30 * 24 * 60 * 60,
-        },
-      },
-    },
-    {
-      urlPattern: /\.(?:js|css|html)$/,
-      handler: 'StaleWhileRevalidate',
-      options: {
-        cacheName: 'static-resources',
-      },
-    },
-  ],
+  cleanupOutdatedCaches: true,
 });
 
 for (const warning of warnings) {
