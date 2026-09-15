@@ -298,8 +298,6 @@ export class RouletteRenderer {
     );
     renderParameters.particleManager.render(this.ctx);
 
-    this._displayCtx.imageSmoothingEnabled = true;
-    this._displayCtx.imageSmoothingQuality = 'high';
     this._displayCtx.drawImage(this._sceneCanvas, 0, 0, this._canvas.width, this._canvas.height);
 
     // 당첨 UI는 저해상도 장면 캔버스를 거쳐 두 번 확대하지 않고 출력 캔버스에 바로 그린다.
