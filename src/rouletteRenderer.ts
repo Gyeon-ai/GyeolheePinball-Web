@@ -274,11 +274,7 @@ export class RouletteRenderer {
 
   render(renderParameters: RenderParameters, uiObjects: UIObject[]) {
     this._theme = renderParameters.theme;
-    const background = this.ctx.createLinearGradient(0, 0, this._sceneCanvas.width, this._sceneCanvas.height);
-    background.addColorStop(0, '#17132f');
-    background.addColorStop(0.52, this._theme.background);
-    background.addColorStop(1, '#12324e');
-    this.ctx.fillStyle = background;
+    this.ctx.fillStyle = this._theme.background;
     this.ctx.fillRect(0, 0, this._sceneCanvas.width, this._sceneCanvas.height);
 
     this.ctx.save();
