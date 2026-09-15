@@ -25,6 +25,9 @@
 <body>
 <script type="module" src="./src/index.ts"></script>
 <script type="text/javascript">
+  const DEFAULT_PINBALL_NAMES = '민결희,야금이,종겜핀볼';
+  const PREVIOUS_DEFAULT_PINBALL_NAMES = '민결희,종합게임,야금이';
+
   function getNames() {
     const value = document.querySelector('#in_names').value.trim();
     return value.split(/[,\r\n]/g).map(v => v.trim()).filter(v => !!v);
@@ -219,8 +222,10 @@
       document.querySelector('#in_names').value = namesFromUrl.replace(/,/g, '\n');
     } else {
       const savedNames = localStorage.getItem('gyeolhee_pinball_names');
-      if (savedNames) {
+      if (savedNames && savedNames !== PREVIOUS_DEFAULT_PINBALL_NAMES) {
         document.querySelector('#in_names').value = savedNames;
+      } else {
+        document.querySelector('#in_names').value = DEFAULT_PINBALL_NAMES;
       }
     }
     document.querySelector('#in_names').addEventListener('input', () => {
@@ -409,7 +414,7 @@
     </div>
   </div>
   <div class="left">
-    <textarea id="in_names" placeholder="Input names separated by commas or line feed here" data-trans="placeholder">민결희,종합게임,야금이</textarea>
+    <textarea id="in_names" placeholder="Input names separated by commas or line feed here" data-trans="placeholder">민결희,야금이,종겜핀볼</textarea>
   </div>
 </div>
 <div id="resultTimerOverlay" class="result-timer-overlay hidden" role="dialog" aria-label="타이머 설정">
