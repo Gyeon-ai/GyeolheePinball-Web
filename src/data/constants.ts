@@ -70,7 +70,7 @@ export const Themes: Record<string, ColorTheme> = {
     winnerText: '#cccccc',
   },
   dark: {
-    background: '#241942',
+    background: '#000000',
     marbleLightness: 75,
     marbleWinningBorder: 'white',
     skillColor: 'white',
@@ -96,10 +96,10 @@ export const Themes: Record<string, ColorTheme> = {
       },
     },
     rankStroke: '',
-    minimapBackground: '#2f2451',
+    minimapBackground: '#000000',
     minimapViewport: HAIR_BORDER,
-    winnerBackground: 'rgba(31, 22, 60, 0.78)',
-    winnerOutline: '#9d69df',
+    winnerBackground: 'rgba(0, 0, 0, 0.72)',
+    winnerOutline: '',
     winnerText: 'white',
   },
 };
