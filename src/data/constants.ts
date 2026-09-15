@@ -8,6 +8,7 @@ export const STUCK_DELAY = 5000;
 export const winnerAreaHeight = 168;
 export const HAIR_BORDER = '#b79cf2';
 export const HAIR_NEON_GOLD = '#71c6f3';
+export const HAIR_NEON_PURPLE = '#cfb9ff';
 export const HAIR_BORDER_COLORS = [
   'rgba(181, 150, 242, .96)',
   'rgba(126, 103, 224, .92)',
@@ -76,9 +77,9 @@ export const Themes: Record<string, ColorTheme> = {
     coolTimeIndicator: 'red',
     entity: {
       box: {
-        fill: '#9d69df',
-        outline: '#c9b6ff',
-        bloom: HAIR_NEON_GOLD,
+        fill: HAIR_NEON_PURPLE,
+        outline: HAIR_NEON_PURPLE,
+        bloom: HAIR_NEON_PURPLE,
         bloomRadius: 15,
       },
       circle: {

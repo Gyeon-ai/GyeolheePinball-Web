@@ -7,6 +7,9 @@ import type { VectorLike } from './types/VectorLike';
 import type { UIObject } from './UIObject';
 import { bound } from './utils/bound.decorator';
 
+const MINIMAP_SCALE = 4;
+const MINIMAP_ENTITY_STROKE_WIDTH = 0.38;
+
 export class Minimap implements UIObject {
   private ctx!: CanvasRenderingContext2D;
   private lastParams: RenderParameters | null = null;
@@ -19,7 +22,7 @@ export class Minimap implements UIObject {
     this.boundingBox = {
       x: 10,
       y: 10,
-      w: 26 * 4,
+      w: 26 * MINIMAP_SCALE,
       h: 0,
     };
   }
@@ -52,8 +55,8 @@ export class Minimap implements UIObject {
     };
     if (this._onViewportChangeHandler) {
       this._onViewportChangeHandler({
-        x: this.mousePosition.x / 4,
-        y: this.mousePosition.y / 4,
+        x: this.mousePosition.x / MINIMAP_SCALE,
+        y: this.mousePosition.y / MINIMAP_SCALE,
       });
     }
   }
@@ -62,18 +65,23 @@ export class Minimap implements UIObject {
     if (!ctx) return;
     const { stage } = params;
     if (!stage) return;
-    this.boundingBox.h = stage.goalY * 4;
+    this.boundingBox.h = stage.goalY * MINIMAP_SCALE;
 
     this.lastParams = params;
 
     this.ctx = ctx;
     ctx.save();
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
     ctx.fillStyle = params.theme.minimapBackground;
     ctx.translate(10, 10);
-    ctx.scale(4, 4);
+    ctx.scale(MINIMAP_SCALE, MINIMAP_SCALE);
     ctx.fillRect(0, 0, 26, stage.goalY);
 
-    this.ctx.lineWidth = 3 / (params.camera.zoom + initialZoom);
+    // 카메라 줌과 무관한 고정 픽셀 두께로 그려 사선이 끊기거나 계단처럼 보이지 않게 한다.
+    this.ctx.lineWidth = MINIMAP_ENTITY_STROKE_WIDTH;
+    this.ctx.lineCap = 'round';
+    this.ctx.lineJoin = 'round';
     this.drawEntities(params.entities, params.theme);
     this.drawMarbles(params);
     this.drawViewport(params);
