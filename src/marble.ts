@@ -78,12 +78,14 @@ export class Marble {
     physics.createMarble(order, startX, startY);
   }
 
-  update(deltaTime: number) {
+  update(deltaTime: number, timeScale: number = 1) {
     const position = this.physics.getMarblePosition(this.id);
     this._previousPosition = this._position;
     this._position = position;
 
-    if (this.isActive && Vector.lenSq(Vector.sub(this.lastPosition, position)) < 0.00001) {
+    // 이동 거리는 물리 시간 배율에 비례하므로 제곱 거리 기준도 함께 보정한다.
+    const stuckDistanceSq = 0.00001 * timeScale * timeScale;
+    if (this.isActive && Vector.lenSq(Vector.sub(this.lastPosition, position)) < stuckDistanceSq) {
       this._stuckTime += deltaTime;
 
       if (this._stuckTime > STUCK_DELAY) {

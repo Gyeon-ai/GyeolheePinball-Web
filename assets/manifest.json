@@ -1,16 +1,23 @@
 {
   "name": "결희 핀볼",
   "short_name": "결희 핀볼",
-  "id": "gyeolhee.marble-roulette",
+  "id": "../",
   "icons": [
     {
-      "src": "gyeolhee-pinball-icon.png",
-      "sizes": "1254x1254",
+      "src": "gyeolhee-pinball-icon-192.png",
+      "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "gyeolhee-pinball-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
     }
   ],
-  "start_url": ".",
+  "start_url": "../",
+  "scope": "../",
   "theme_color": "#000000",
   "background_color": "#000000",
   "display_override": [
