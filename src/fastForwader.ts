@@ -46,8 +46,9 @@ export class FastForwader implements UIObject {
     return this.bound;
   }
 
-  onMouseDown?(_e?: MouseEventArgs): void {
-    this.isEnabled = true;
+  onMouseDown?(e?: MouseEventArgs): void {
+    // UIObject 입력 전달부는 버튼 밖을 누르면 undefined를 넘긴다.
+    this.isEnabled = e !== undefined;
   }
 
   onMouseUp?(_e?: MouseEventArgs): void {

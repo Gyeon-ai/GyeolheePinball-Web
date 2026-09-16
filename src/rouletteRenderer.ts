@@ -26,8 +26,6 @@ export type RenderParameters = {
 
 const MAX_DISPLAY_WIDTH = 1920;
 const WINNER_TEXT_OFFSET = 30;
-// 결희 퍼스나콘 원본을 고해상도 캐시로 키워 공과 당첨 화면에서 선명하게 표시한다.
-const PERSONACON_RENDER_SCALE = 4;
 const PERSONACON_URLS = [
   new URL('../assets/personacons-final/tier1-01-month.png', import.meta.url),
   new URL('../assets/personacons-final/tier1-03-month.png', import.meta.url),
@@ -58,8 +56,8 @@ export class RouletteRenderer {
   private _displayCtx!: CanvasRenderingContext2D;
   public sizeFactor = 1;
 
-  protected _personaconImages: HTMLCanvasElement[] = [];
-  private _personaconImageByName = new Map<string, HTMLCanvasElement>();
+  protected _personaconImages: HTMLImageElement[] = [];
+  private _personaconImageByName = new Map<string, HTMLImageElement>();
   protected _theme: ColorTheme = Themes.dark;
   get width() {
     return this._sceneCanvas.width;
@@ -128,20 +126,10 @@ export class RouletteRenderer {
   }
 
   private async _load(): Promise<void> {
-    const images = await Promise.all(PERSONACON_URLS.map((url) => this._loadImage(url.toString())));
-    this._personaconImages = images.map((image) => {
-      const canvas = document.createElement('canvas');
-      canvas.width = image.naturalWidth * PERSONACON_RENDER_SCALE;
-      canvas.height = image.naturalHeight * PERSONACON_RENDER_SCALE;
-      const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
-      ctx.imageSmoothingEnabled = true;
-      ctx.imageSmoothingQuality = 'high';
-      ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-      return canvas;
-    });
+    this._personaconImages = await Promise.all(PERSONACON_URLS.map((url) => this._loadImage(url.toString())));
   }
 
-  private getMarbleImage(name: string): CanvasImageSource | undefined {
+  private getMarbleImage(name: string): HTMLImageElement | undefined {
     if (this._personaconImages.length === 0) {
       return undefined;
     }
@@ -271,15 +259,17 @@ export class RouletteRenderer {
     const scaledWinnerAreaHeight = winnerAreaHeight * scale;
     ctx.fillRect(width / 2, height - scaledWinnerAreaHeight, width / 2, scaledWinnerAreaHeight);
 
-    // Draw marble image or colored circle
-    const marbleSize = 100 * scale;
+    // 원본 픽셀을 정수 배율로 확대해 당첨 퍼스나콘이 흐려지지 않게 한다.
+    const marbleImage = this.getMarbleImage(winner.name);
+    const targetMarbleSize = 100 * scale;
+    const marbleSize = marbleImage
+      ? marbleImage.naturalWidth * Math.max(1, Math.round(targetMarbleSize / marbleImage.naturalWidth))
+      : targetMarbleSize;
     const marbleCenterX = width - marbleSize / 2 - 20 * scale;
     const marbleCenterY = height - scaledWinnerAreaHeight / 2;
-    const marbleImage = this.getMarbleImage(winner.name);
 
     if (marbleImage) {
-      ctx.imageSmoothingEnabled = true;
-      ctx.imageSmoothingQuality = 'high';
+      ctx.imageSmoothingEnabled = false;
       ctx.drawImage(
         marbleImage,
         marbleCenterX - marbleSize / 2,

@@ -7,7 +7,9 @@ export const zoomThreshold = 5;
 export const STUCK_DELAY = 5000;
 export const winnerAreaHeight = 168;
 export const HAIR_BORDER = '#b79cf2';
-export const HAIR_NEON_GOLD = '#71c6f3';
+export const HAIR_NEON_SKY = '#78c8ff';
+export const HAIR_NEON_SKY_FILL = '#bfdfff';
+export const HAIR_NEON_SKY_HIGHLIGHT = '#eaf7ff';
 export const HAIR_NEON_PURPLE = '#cfb9ff';
 export const HAIR_BORDER_COLORS = [
   'rgba(181, 150, 242, .96)',
@@ -23,15 +25,15 @@ export enum Skills {
 }
 
 export const DefaultEntityColor = {
-  box: HAIR_NEON_GOLD,
+  box: HAIR_NEON_SKY_FILL,
   circle: 'yellow',
   polyline: 'white',
 } as const;
 
 export const DefaultBloomColor = {
-  box: HAIR_NEON_GOLD,
+  box: HAIR_NEON_SKY,
   circle: 'yellow',
-  polyline: HAIR_NEON_GOLD,
+  polyline: HAIR_NEON_SKY,
 };
 
 export const Themes: Record<string, ColorTheme> = {
@@ -45,7 +47,7 @@ export const Themes: Record<string, ColorTheme> = {
       box: {
         fill: '#226f92',
         outline: 'black',
-        bloom: HAIR_NEON_GOLD,
+        bloom: HAIR_NEON_SKY,
         bloomRadius: 0,
       },
       circle: {
@@ -57,7 +59,7 @@ export const Themes: Record<string, ColorTheme> = {
       polyline: {
         fill: 'white',
         outline: 'black',
-        bloom: HAIR_NEON_GOLD,
+        bloom: HAIR_NEON_SKY,
         bloomRadius: 0,
       },
     },
@@ -77,10 +79,10 @@ export const Themes: Record<string, ColorTheme> = {
     coolTimeIndicator: 'red',
     entity: {
       box: {
-        fill: HAIR_NEON_PURPLE,
-        outline: HAIR_NEON_PURPLE,
-        bloom: HAIR_NEON_PURPLE,
-        bloomRadius: 15,
+        fill: HAIR_NEON_SKY_FILL,
+        outline: HAIR_NEON_SKY_HIGHLIGHT,
+        bloom: HAIR_NEON_SKY,
+        bloomRadius: 12,
       },
       circle: {
         fill: 'yellow',
@@ -89,10 +91,10 @@ export const Themes: Record<string, ColorTheme> = {
         bloomRadius: 15,
       },
       polyline: {
-        fill: '#f6f2ff',
-        outline: '#e6dcff',
-        bloom: HAIR_NEON_GOLD,
-        bloomRadius: 15,
+        fill: HAIR_NEON_SKY_HIGHLIGHT,
+        outline: HAIR_NEON_SKY_HIGHLIGHT,
+        bloom: HAIR_NEON_SKY,
+        bloomRadius: 12,
       },
     },
     rankStroke: '',

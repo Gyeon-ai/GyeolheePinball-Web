@@ -1,5 +1,12 @@
 # Changelog
 
+- 2026-09-16:
+    - Clarified the upstream, third-party, and project asset license notices.
+    - Retired the incomplete offline cache so deployed updates are loaded normally.
+    - Smoothed horizontal camera movement.
+    - Added optimized 192px and 512px application icons.
+    - Fixed fast-forward hit testing and slow-motion stuck detection.
+    - Improved the Gyeolhee neon palette and winner personacon rendering.
 - 2025-11-13:
     - Optimized the rendering process.
 - 2025-11-10:

@@ -79,7 +79,7 @@ export class Camera {
     }
 
     // interpolate position
-    this._position.x = this._interpolation(this.x, this._targetPosition.x);
+    this._position.x = this._interpolation(this.x, this._targetPosition.x, 120);
     this._position.y = this._interpolation(this.y, this._targetPosition.y);
 
     // interpolate zoom
@@ -105,13 +105,13 @@ export class Camera {
     }
   }
 
-  private _interpolation(current: number, target: number) {
+  private _interpolation(current: number, target: number, delta: number = 10) {
     const d = target - current;
     if (Math.abs(d) < 1 / initialZoom) {
       return target;
     }
 
-    return current + d / 10;
+    return current + d / delta;
   }
 
   renderScene(ctx: CanvasRenderingContext2D, callback: (ctx: CanvasRenderingContext2D) => void) {
