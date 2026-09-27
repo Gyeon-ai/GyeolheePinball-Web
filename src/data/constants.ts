@@ -79,8 +79,8 @@ export const Themes: Record<string, ColorTheme> = {
     coolTimeIndicator: 'red',
     entity: {
       box: {
-        fill: HAIR_NEON_SKY_FILL,
-        outline: HAIR_NEON_SKY_HIGHLIGHT,
+        fill: HAIR_NEON_SKY,
+        outline: HAIR_NEON_SKY,
         bloom: HAIR_NEON_SKY,
         bloomRadius: 12,
       },
