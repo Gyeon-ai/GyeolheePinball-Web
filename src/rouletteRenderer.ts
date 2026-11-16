@@ -340,38 +340,23 @@ export class RouletteRenderer {
     // Keep enlarged pixel art crisp; smooth only when shrinking a source image.
     const marbleImage = this.getMarbleImage(winner.name);
     const marbleSize = Math.min(92 * winnerScale * cssScale, panelHeight * .54);
-    const marbleCenterX = panelX + panelWidth - 18 * winnerScale * cssScale - marbleSize / 2;
     const nameCenterY = panelY + panelHeight * .7;
     const marbleCenterY = nameCenterY;
 
-    if (marbleImage) {
-      ctx.imageSmoothingEnabled = marbleImage.naturalWidth > marbleSize;
-      ctx.imageSmoothingQuality = 'high';
-      ctx.drawImage(
-        marbleImage,
-        marbleCenterX - marbleSize / 2,
-        marbleCenterY - marbleSize / 2,
-        marbleSize,
-        marbleSize
-      );
-    } else {
-      ctx.beginPath();
-      ctx.arc(marbleCenterX, marbleCenterY, marbleSize / 2, 0, Math.PI * 2);
-      ctx.fillStyle = `hsl(${winner.hue} 100% ${theme.marbleLightness})`;
-      ctx.fill();
-    }
-
     const textWidth = Math.max(1, panelWidth - marbleSize - 54 * winnerScale * cssScale);
-    const textCenterX = panelX + 18 * winnerScale * cssScale + textWidth / 2;
+    const sidePadding = 18 * winnerScale * cssScale;
+    const nameGap = 18 * winnerScale * cssScale;
+    // '당첨' 글자는 상자 정가운데
+    const panelCenterX = panelX + panelWidth / 2;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.font = `700 ${Math.min(36 * winnerScale * cssScale, panelHeight * .24)}px ${DOT_FONT_FAMILY}`;
     const labelShadow = Math.max(1, Math.round(3 * winnerScale * cssScale));
     const labelY = panelY + panelHeight * .28;
     ctx.fillStyle = DOT_RED;
-    ctx.fillText('당 첨', textCenterX + labelShadow, labelY + labelShadow);
+    ctx.fillText('당 첨', panelCenterX + labelShadow, labelY + labelShadow);
     ctx.fillStyle = DOT_ACCENT;
-    ctx.fillText('당 첨', textCenterX, labelY);
+    ctx.fillText('당 첨', panelCenterX, labelY);
 
     const characters = Array.from(winner.name);
     const maxNameSize = Math.min(58 * winnerScale * cssScale, panelHeight * .37);
@@ -392,6 +377,30 @@ export class RouletteRenderer {
       }
     }
     ctx.font = `${nameSize}px ${WINNER_NAME_FONT_FAMILY}`;
+    // [이름 + 간격 + 공]을 한 묶음으로 보고 상자 가운데에 둔다(줄인 글자 크기로 잰 실제 이름 폭 기준)
+    const nameWidth = Math.min(textWidth, Math.max(...nameLines.map((line) => ctx.measureText(line).width)));
+    const groupWidth = nameWidth + nameGap + marbleSize;
+    const groupLeft = Math.max(panelX + sidePadding, panelCenterX - groupWidth / 2);
+    const textCenterX = groupLeft + nameWidth / 2;
+    const marbleCenterX = groupLeft + nameWidth + nameGap + marbleSize / 2;
+
+    if (marbleImage) {
+      ctx.imageSmoothingEnabled = marbleImage.naturalWidth > marbleSize;
+      ctx.imageSmoothingQuality = 'high';
+      ctx.drawImage(
+        marbleImage,
+        marbleCenterX - marbleSize / 2,
+        marbleCenterY - marbleSize / 2,
+        marbleSize,
+        marbleSize
+      );
+    } else {
+      ctx.beginPath();
+      ctx.arc(marbleCenterX, marbleCenterY, marbleSize / 2, 0, Math.PI * 2);
+      ctx.fillStyle = `hsl(${winner.hue} 100% ${theme.marbleLightness})`;
+      ctx.fill();
+    }
+
     const nameColor = `hsl(${winner.hue} 100% ${theme.marbleLightness}%)`;
     const nameShadow = Math.max(1, Math.round(nameSize / 20));
     const lineHeight = nameSize * 1.08;
