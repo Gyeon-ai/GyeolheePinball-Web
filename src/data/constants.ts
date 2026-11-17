@@ -5,12 +5,10 @@ export const canvasWidth = 1600;
 export const canvasHeight = 900;
 export const zoomThreshold = 5;
 export const STUCK_DELAY = 5000;
-export const winnerAreaHeight = 168;
 export const HAIR_BORDER = '#b79cf2';
 export const HAIR_NEON_SKY = '#78c8ff';
 export const HAIR_NEON_SKY_FILL = '#bfdfff';
 export const HAIR_NEON_SKY_HIGHLIGHT = '#eaf7ff';
-export const HAIR_NEON_PURPLE = '#cfb9ff';
 export const HAIR_BORDER_COLORS = [
   'rgba(181, 150, 242, .96)',
   'rgba(126, 103, 224, .92)',
@@ -33,18 +31,6 @@ export enum Skills {
   None,
   Impact,
 }
-
-export const DefaultEntityColor = {
-  box: HAIR_NEON_SKY_FILL,
-  circle: 'yellow',
-  polyline: 'white',
-} as const;
-
-export const DefaultBloomColor = {
-  box: HAIR_NEON_SKY,
-  circle: 'yellow',
-  polyline: HAIR_NEON_SKY,
-};
 
 export const Themes: Record<string, ColorTheme> = {
   light: {
