@@ -16,18 +16,6 @@
 - `?names=게임1,게임2` URL 매개변수로 명단 자동 입력
 - 브라우저 로컬 저장 및 배포 시 최신 버전 자동 반영
 
-## 실행과 빌드
-
-Node.js 20 이상과 pnpm이 필요하다.
-
-```powershell
-pnpm install
-pnpm dev
-pnpm build
-```
-
-개발 주소는 `http://localhost:1235`이며, 정적 배포 파일은 `dist` 폴더에 생성된다.
-
 ## 수집기 연결
 
 Windows 일반판·자동판 수집기의 `PinballUrl`에 배포 주소를 넣으면 기존 `?names=` 명단 전달 기능을 그대로 사용할 수 있다.
